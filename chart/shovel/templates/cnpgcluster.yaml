@@ -9,4 +9,4 @@ spec:
       database: {{ .Values.cnpg.shovelPgCluster.database }}
       owner: {{ .Values.cnpg.shovelPgCluster.owner }}
   storage:
-    size: 1Gi
+    size: {{ .Values.cnpg.shovelPgCluster.storage.size }}
