@@ -95,7 +95,6 @@ shovel:
         enabled: true
         sources:
           - name: mainnet
-          - name: base
         table:
           name: usdc
           columns:

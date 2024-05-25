@@ -30,24 +30,30 @@ spec:
           image: "{{ .Values.shovel.image.repository }}:{{ .Values.shovel.image.tag }}"
           imagePullPolicy: {{ .Values.shovel.image.pullPolicy }}
           env:
-            {{ if .Values.global.postgresql.enabled }}
-            PG_URL: postgres://{{ .Values.global.postgresql.auth.username }}:{{ .Values.global.postgresql.auth.password }}@{{ include "shovel.fullname" . }}-postgresql:5432
-            {{ else }}
-            PG_URL: {{ .Values.shovel.pgUrl }}
-            {{- end }}
-          args:
-            - -config config.json
-            - -l {{ .Values.shovel.ports.http }}
-            {{ if .Values.shovel.notx }}
-            - -notx
-            {{- end }}
+            - name: PG_URL
+              {{ if .Values.global.postgresql.enabled }}
+              value: "postgres://{{ .Values.global.postgresql.auth.username }}:{{ .Values.global.postgresql.auth.password }}@{{ include "shovel.fullname" . }}-postgresql:5432"
+              {{ else }}
+              value: {{ .Values.shovel.pgUrl | quote }}
+              {{- end }}
+          command: 
+            - sh
+            - -ac
+            - >
+              shovel
+              -config /home/config.json 
+              -l {{ .Values.shovel.ports.http }}
+              {{ if .Values.shovel.notx }}
+              -notx
+              {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.shovel.ports.http }}
               protocol: TCP
           volumeMounts:
             - name: config
-              mountPath: config.json
+              mountPath: /home/config.json
+              subPath: config.json
           livenessProbe:
             {{- toYaml .Values.shovel.livenessProbe | nindent 12 }}
           readinessProbe:

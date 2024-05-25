@@ -4,4 +4,4 @@ metadata:
   name: {{ include "shovel.fullname" . }}
 data:
   config.json: |
-    {{ .Values.shovel.config | toJson | squote }}
+    {{ .Values.shovel.config | toJson }}
