@@ -42,7 +42,7 @@ spec:
             - >
               shovel
               -config /home/config.json 
-              -l {{ .Values.shovel.ports.http }}
+              -l 0.0.0.0:{{ .Values.shovel.ports.http }}
               {{ if .Values.shovel.notx }}
               -notx
               {{- end }}

@@ -95,6 +95,7 @@ shovel:
         enabled: true
         sources:
           - name: mainnet
+            batch_size: 1000
         table:
           name: usdc
           columns:
@@ -114,7 +115,6 @@ shovel:
             filter_op: contains
             filter_arg:
               - a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48
-              - 725C219BD321bFD404B240F4b5FE2672Bc5f4dC2
         event:
           name: Transfer
           type: event
@@ -131,3 +131,5 @@ shovel:
             - name: value
               type: uint256
               column: value
+        dashboard:
+          disable_authn: true
