@@ -75,6 +75,7 @@ shovel:
     path: /metrics
     interval: 30s
     scrapeTimeout: 10s
+  # -- shovel config
   shovelConfig:
     # TODO: Move to configmap and select cpng service
     pg_url: postgres:///shovel
@@ -124,3 +125,14 @@ shovel:
             - name: value
               type: uint256
               column: value
+
+cnpg:
+  enabled: true
+  shovelPgCluster:
+    instances: 1
+    storage:
+      size: 1Gi
+    database: shovel
+    owner: shovel
+    username: shovel
+    password: shovel
