@@ -126,13 +126,14 @@ shovel:
               type: uint256
               column: value
 
-cnpg:
+cloudnative-pg:
   enabled: true
-  shovelPgCluster:
-    instances: 1
-    storage:
-      size: 1Gi
-    database: shovel
-    owner: shovel
-    username: shovel
-    password: shovel
+
+shovelCnpgCluster:
+  instances: 1
+  storage:
+    size: 1Gi
+  database: shovel
+  owner: shovel
+  username: shovel
+  password: shovel
