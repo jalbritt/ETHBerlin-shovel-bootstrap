@@ -3,10 +3,10 @@ kind: Cluster
 metadata:
   name: {{ include "shovel.fullname" . }}
 spec:
-  instances: {{ .Values.cnpg.shovelPgCluster.instances }}
+  instances: {{ .Values.shovelCnpgCluster.instances }}
   bootstrap:
     initdb:
-      database: {{ .Values.cnpg.shovelPgCluster.database }}
-      owner: {{ .Values.cnpg.shovelPgCluster.owner }}
+      database: {{ .Values.shovelCnpgCluster.database }}
+      owner: {{ .Values.shovelCnpgCluster.owner }}
   storage:
-    size: {{ .Values.cnpg.shovelPgCluster.storage.size }}
+    size: {{ .Values.shovelCnpgCluster.storage.size }}
