@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "shovel.fullname" . }}
   labels:
-    {{- include "shovel.podLabels" . | nindent 4 }}
+    {{- include "shovel.labels" . | nindent 4 }}
   annotations:
     {{- toYaml .Values.shovel.podAnnotations | nindent 4 }}
 spec:
@@ -32,7 +32,6 @@ spec:
           args:
             - -config
             - -l
-            {{- end }}
             {{ if .Values.shovel.notx }}
             - -notx
             {{- end }}

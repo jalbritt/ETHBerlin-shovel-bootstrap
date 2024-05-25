@@ -1,0 +1,12 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ include "shovel.fullname" . }}
+spec:
+  instances: {{ .Values.cnpg.shovelPgCluster.instances }}
+  bootstrap:
+    initdb:
+      database: {{ .Values.cnpg.shovelPgCluster.database }}
+      owner: {{ .Values.cnpg.shovelPgCluster.owner }}
+  storage:
+    size: 1Gi
