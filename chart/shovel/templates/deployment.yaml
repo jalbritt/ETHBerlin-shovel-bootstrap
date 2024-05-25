@@ -29,9 +29,15 @@ spec:
            {{- toYaml .Values.global.containerSecurityContext | nindent 12 }}
           image: "{{ .Values.shovel.image.repository }}:{{ .Values.shovel.image.tag }}"
           imagePullPolicy: {{ .Values.shovel.image.pullPolicy }}
+          env:
+            {{ if .Values.global.postgresql.enabled }}
+            PG_URL: postgres://{{ .Values.global.postgresql.auth.username }}:{{ .Values.global.postgresql.auth.password }}@{{ include "shovel.fullname" . }}-postgresql:5432
+            {{ else }}
+            PG_URL: {{ .Values.shovel.pgUrl }}
+            {{- end }}
           args:
-            - -config
-            - -l
+            - -config config.json
+            - -l {{ .Values.shovel.ports.http }}
             {{ if .Values.shovel.notx }}
             - -notx
             {{- end }}
@@ -39,12 +45,22 @@ spec:
             - name: http
               containerPort: {{ .Values.shovel.ports.http }}
               protocol: TCP
+          volumeMounts:
+            - name: config
+              mountPath: config.json
           livenessProbe:
             {{- toYaml .Values.shovel.livenessProbe | nindent 12 }}
           readinessProbe:
             {{- toYaml .Values.shovel.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.shovel.resources | nindent 12 }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "shovel.fullname" . }}
+            items:
+              - key: config.json
+                path: config.json
       nodeSelector:
         {{- toYaml .Values.global.nodeSelector | nindent 8 }}
       affinity:

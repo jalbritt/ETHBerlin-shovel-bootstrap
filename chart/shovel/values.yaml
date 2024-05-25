@@ -38,6 +38,12 @@ global:
     type: ClusterIP 
     # -- Service annotations
     annotations: {}
+  postgresql:
+    enabled: true
+    auth:
+      username: "shovel"
+      password: "shovel"
+      database: "shovel"
 
 # shovel
 shovel:
@@ -75,14 +81,15 @@ shovel:
     path: /metrics
     interval: 30s
     scrapeTimeout: 10s
+  # -- shovel pg_url, use for setting your own postgresql endpoint, by default it uses the integrated postgresql from the bitnami/postgresql dependency
+  pgUrl: "postgres:///shovel"
   # -- shovel config
-  shovelConfig:
-    # TODO: Move to configmap and select cpng service
-    pg_url: postgres:///shovel
+  config:
+    pg_url: "$PG_URL"
     eth_sources:
       - name: mainnet
         chain_id: 1
-        url: https://ethereum-rpc.publicnode.com
+        url: https://eth.merkle.io
     integrations:
       - name: usdc-transfer
         enabled: true
@@ -108,7 +115,7 @@ shovel:
             filter_op: contains
             filter_arg:
               - a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48
-              - 833589fCD6eDb6E08f4c7C32D4f71b54bdA02913
+              - 725C219BD321bFD404B240F4b5FE2672Bc5f4dC2
         event:
           name: Transfer
           type: event
@@ -125,15 +132,3 @@ shovel:
             - name: value
               type: uint256
               column: value
-
-cloudnative-pg:
-  enabled: true
-
-shovelCnpgCluster:
-  instances: 1
-  storage:
-    size: 1Gi
-  database: shovel
-  owner: shovel
-  username: shovel
-  password: shovel

@@ -19,10 +19,10 @@ type: application
 version: 0.1.0
 appVersion: '1.6'
 dependencies:
-  - name: cloudnative-pg
-    condition: cloudnative-pg.enabled
-    version: "0.21.2"
-    repository: "https://cloudnative-pg.github.io/charts"
+  - name: postgresql
+    condition: global.postgresql.enabled
+    version: "15.4.0"
+    repository: "https://charts.bitnami.com/bitnami"
 maintainers:
   - name: laibe
   - name: jalbritt
