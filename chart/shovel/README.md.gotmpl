@@ -14,6 +14,20 @@
 
 ## Quick Start
 
-TODO
+```bash
+helm install shovel chart/shovel
+```
+
+## PostgreSQL
+
+By default the chart will install a postgresql database using the bitnami postgresql chart. 
+If you want to use your own existing database instead (e.g. managed postgresql or cloudnative-pg),
+specify the url in the values.yaml:
+
+```yaml
+shovel:
+  pgUrl: "postgres:///my-postgresql"
+```
+
 
 {{ template "chart.valuesSection" . }}
