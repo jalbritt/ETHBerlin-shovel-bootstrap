@@ -1,6 +1,5 @@
 # ETHBerlin-shovel-bootstrap
-
-Helm chart that deploys [shovel](https://indexsupply.com/shovel/) together with postgresql.
+Developers who want to consume data from blockchains face challenges such as setup complexity, data scaling, and privacy. In this project, we enhance the user experience for [shovel](https://indexsupply.com/shovel/). We've created a helm chart which allows developers to quickly get started extracting their own data into Postgres. Similar functionality exists in tools like Dune and Etherscan, but they do not support full privacy and ownership of the data.
 
 From the shovel docs:
 
